@@ -5,6 +5,7 @@ import json
 
 import requests
 
+from utils.utils import create_url
 from settings import (EMAIL_ADDRESS, SMITHY_API_TOKEN)
 
 
@@ -49,28 +50,6 @@ def main():
     print payload.get('latest_build').get('id')
 
     return
-
-
-def create_url(base, path, params=None):
-    """
-    Create a valid URL using base, path, and parameters.
-
-    :param base: protocol, domain, and port
-    :type base: str
-    :param path: path to resource
-    :type path: str
-    :param params: optional parameters
-    :type params: dict
-    :return: url
-    :rtype: str
-    """
-    if not params:
-        return base + path
-    else:
-        url = base + path + '?'
-        for key, value in sorted(params.iteritems()):
-            url += key + '=' + str(value) + '&'
-        return url[:-1]
 
 
 if __name__ == '__main__':
