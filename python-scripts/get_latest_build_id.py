@@ -1,3 +1,4 @@
+import pprint
 import argparse
 import base64
 import json
@@ -13,9 +14,9 @@ def parse_args():
         description='Get the latest build ID for the workiva-deploy '
                     'repository')
 
-    # specify the version of workiva-deploy
-    parser.add_argument('-v', '--version', type=str,
-                        help='version of workiva-deploy')
+    # specify the reference of workiva-deploy
+    parser.add_argument('-r', '--reference', type=str,
+                        help='refernce of workiva-deploy')
 
     return parser.parse_args()
 
@@ -23,11 +24,11 @@ def parse_args():
 def main():
     args = parse_args()
 
-    version = args.version
+    reference = args.reference
 
-    branch = 'refs/heads/' + version
-    if '.' in version:
-        branch = 'refs/tags/' + version
+    branch = 'refs/heads/' + reference
+    if '.' in reference:
+        branch = 'refs/tags/' + reference
 
     headers = {
         'Authorization':
@@ -39,11 +40,11 @@ def main():
     url = create_url(
         'https://ci.webfilings.com', '/api/v1/Workiva/workiva-deploy', params)
 
-    print url
-
     response = requests.get(url, headers=headers)
 
     payload = json.loads(response.content)
+
+    pprint.pprint(payload.get('latest_build'))
 
     print payload.get('latest_build').get('id')
 
