@@ -1,5 +1,5 @@
 # workiva-deploy-tools
-Python scripts for automating manual tasks.
+workiva-deploy-tools comprises a collection of Python modules for automating manual tasks in Workiva Deploy.
 
 ## Installation
 
